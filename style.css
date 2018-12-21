@@ -14,7 +14,7 @@ html, body {
   justify-content: center;
 }
 
-.login-form {
+.login-form, .player-list {
   width: 260px;
   border: 1px solid black;
   line-height: 100px;
@@ -40,3 +40,45 @@ html, body {
   padding-left: 6px;
   width: 167px;
 }
+
+.player-list select {
+  font-size: 1em;
+  width: 100%;
+  margin-top: 5px;
+  border: 1px solid black;
+  padding: 3px;
+}
+
+.player-list-wrapper {
+  position: relative;
+}
+
+.player-list button {
+  font-size: 1em;
+  width: 100%;
+  border: solid black 1px;
+  padding: 5px;
+  margin-top: 5px;
+}
+
+.player-list {
+  line-height: 50%;
+}
+
+.warning {
+  display: inline-block;
+  padding: 4px;
+  color: red;
+  text-align: center;
+  width: 100%;
+  position: absolute;
+  top: 40px;
+  box-sizing: border-box;
+}
+
+/*.player-list {
+  padding: 20px;
+  border: solid black 1px;
+}*/
+
+
