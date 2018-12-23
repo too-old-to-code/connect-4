@@ -2,7 +2,17 @@ class PlayerList {
   constructor(parent) {
     this.parent = parent
     this.element = this.parent.element
-    this.options = []
+    this.players = {}
+  }
+
+  renderInviteModal (player) {
+    return `
+      <div class="modal-box">
+        <span class="modal-title">Waiting for ${player.name} to accept your invitation</span class="modal-title">
+        <hr />
+        <button onclick="app.declineInvitation('${player.id}')">Cancel</button>
+      </div>
+    `
   }
 
   render () {
@@ -11,20 +21,20 @@ class PlayerList {
         <div class="player-list">
           <select size="5" >
             ${
-                this.options.reduce((acc, option) => {
+                this.options().reduce((acc, option) => {
                   return `${acc}<option
-                    onclick="app.game.playerList.selected = '${option.id}'"
-                    value="${option.id}"
+                    onclick="app.playerList.selected = '${option}'"
+                    value="${option}"
                     >
-                      ${option.name}
+                      ${this.players[option].name}
                     </option>`
                 }, '')
             }
           </select>
-          <button onclick="app.game.playerList.handleInvite()">Invite</button>
+          <button onclick="app.playerList.handleInvite()">Invite</button>
         </div>
         ${
-            this.options.length
+            this.options().length
               ? ''
               : '<span class="warning">Currently, no other players are online</span>'
           }
@@ -32,23 +42,22 @@ class PlayerList {
     `
   }
 
-
-  // options () {
-  //   return [
-  //     {id: 1, name: 'Billy'},
-  //     {id: 2, name: 'Robert'},
-  //     {id: 3, name: 'Kirk'}
-  //   ]
-  // }
+  options() {
+    return  Object.keys(this.players)
+      .filter(playerId => playerId !== this.parent.state.id)
+  }
 
   handleInvite (user) {
+    if(!this.selected) return
     let invitation = {
       to: this.selected,
-      from: this.parent.state.id,
-      name: this.parent.state.token
+      from: this.parent.state.id
     }
+    let player = this.players[this.selected]
     this.parent.socket.emit('invite', invitation)
-    console.log(invitation)
+    this.parent.showModal(this.renderInviteModal(player))
+
+
   }
 }
 
