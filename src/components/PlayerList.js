@@ -1,8 +1,11 @@
+const CheatPanel = require('./CheatPanel')
+
 class PlayerList {
   constructor(parent) {
     this.parent = parent
     this.element = this.parent.element
     this.players = {}
+    this.cheatPanel = new CheatPanel(this)
   }
 
   renderInviteModal (player) {
@@ -40,6 +43,7 @@ class PlayerList {
               : '<span class="warning">Currently, no other players are online</span>'
           }
       </div>
+      ${this.cheatPanel.isVisible ? this.cheatPanel.render() : '' }
     `
   }
 

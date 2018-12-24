@@ -13,6 +13,7 @@ class App {
     this.state = {
       token: ''
     }
+    // this.characters = ''
     this.element.innerHTML = this.render()
 
   }
@@ -44,6 +45,16 @@ class App {
           return this.playerList.render()
         })()
   }
+
+  // detectCheatCode (evt) {
+  //   this.characters = this.characters.length >= 8 ?
+  //     `${this.characters.substring(1,8)}${evt.key}` :
+  //     `${this.characters}${evt.key}`
+  //   if (this.characters.includes('custom')){
+  //     this.characters = ''
+  //     console.log('cheat activated:')
+  //   }
+  // }
 
   acceptInvitation (opponentId) {
     this.socket.emit('accept', {
