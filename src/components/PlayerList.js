@@ -19,19 +19,20 @@ class PlayerList {
     return `
       <div class="player-list-wrapper">
         <div class="player-list">
-          <select size="5" >
+          <select size="5" ${this.options().length ? '' : 'class="empty-list"'} >
             ${
                 this.options().reduce((acc, option) => {
                   return `${acc}<option
                     onclick="app.playerList.selected = '${option}'"
                     value="${option}"
+                    ${this.players[option].busy ? 'disabled' : ''}
                     >
-                      ${this.players[option].name}
+                      ${this.players[option].name} ${this.players[option].busy ? '&lt;-- busy --&gt;' : ''}
                     </option>`
                 }, '')
             }
           </select>
-          <button onclick="app.playerList.handleInvite()">Invite</button>
+          <button onclick="app.playerList.handleInvite()" ${this.options().length ? '' : 'disabled'}>Invite</button>
         </div>
         ${
             this.options().length

@@ -8,7 +8,7 @@ const {
 
 const tableUI = require('./apparatus/Table')
 
-let isLocalPlayersTurn = (a, b) => a === b
+let isLocalPlayersTurn = (playerToMoveID, localPlayerID) => playerToMoveID === localPlayerID
 
 const findParentColumnOfCell = id => id % NUM_OF_COLUMNS
 
@@ -103,6 +103,7 @@ class Game {
       this.parent.game = null
       this.parent.hideModal()
       this.parent.element.innerHTML = this.parent.playerList.render()
+      this.parent.socket.emit('occupied', this.localPlayerId, false)
     }, 3000)
     this.parent.showModal(this.renderGameEndMessage(msg))
   }

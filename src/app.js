@@ -42,6 +42,7 @@ class App {
       p1: opponentId,
       p2: this.state.id
     })
+
     // this.socket.emit('accept', this.state.id)
     this.startGame(opponentId, true)
   }
@@ -54,10 +55,10 @@ class App {
   startGame (opponentId, isPlayer2) {
     let players = [this.state.id]
     players[isPlayer2 ? 'push' : 'unshift'](opponentId)
-    console.log('this.players:', players)
     this.game = new Game(this, players)
     this.element.innerHTML = this.game.render()
     this.hideModal()
+    this.socket.emit('occupied', this.state.id, true)
   }
 
   showModal (modal) {
@@ -88,9 +89,19 @@ class App {
         this.showModal(this.renderInviteModal(player))
       })
 
+      this.socket.on('playerBusyStatusChange', clients => {
+        console.log('players:', clients)
+
+        this.playerList.players = clients
+        if (this.game) return
+        this.element.innerHTML = this.playerList.render()
+
+      })
+
       this.socket.on('newConnection', (players) => {
         console.log('newjoiner:', players)
         this.playerList.players = players
+        if (this.game) return
         this.element.innerHTML = this.playerList.render()
       })
 

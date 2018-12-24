@@ -12,7 +12,7 @@ function init (client) {
     // clients.push({name: username, id: client.id})
     clients = {
       ...clients,
-      [client.id]: { name: username, id: client.id }
+      [client.id]: { name: username, id: client.id, busy: false }
     }
 
     // when a new client joins send his id to the current players
@@ -33,6 +33,13 @@ function init (client) {
     io.sockets.emit('clientLeft', client.id)
     delete clients[client.id]
   });
+
+  client.on('occupied', function(id, busy) {
+    console.log('occupied:', id)
+    clients[id].busy = busy
+    io.sockets.emit('playerBusyStatusChange', clients)
+    console.log('clients:', clients)
+  })
 
   client.on('accept', function(msg) {
 
