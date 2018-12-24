@@ -29,6 +29,14 @@ class App {
   }
 
   render () {
+    try {
+      let appState = localStorage.getItem('appState')
+      if (appState) {
+        this.state = JSON.parse(appState)
+      }
+    } catch (e) {
+      console.log('Couldn\t deserialise appstate')
+    }
     return !this.state.token
       ? this.login.render()
       : (() => {

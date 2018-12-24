@@ -25,6 +25,12 @@ class LoginForm {
 
   handleConnect (e) {
     this.parent.state.token = this.value
+    try {
+      let serialisedState = JSON.stringify(this.parent.state)
+      localStorage.setItem('appState', serialisedState)
+    } catch (e) {
+      console.log('Couldn\'t serialise the state')
+    }
     this.element.innerHTML = this.parent.render()
   }
 }
