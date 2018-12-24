@@ -38,8 +38,12 @@ class App {
   }
 
   acceptInvitation (opponentId) {
-    this.socket.emit('accept', opponentId)
-    this.startGame()
+    this.socket.emit('accept', {
+      p1: opponentId,
+      p2: this.state.id
+    })
+    // this.socket.emit('accept', this.state.id)
+    this.startGame(opponentId, true)
   }
 
   declineInvitation (opponentId) {
@@ -47,8 +51,11 @@ class App {
     this.hideModal()
   }
 
-  startGame (opponentId) {
-    this.game = new Game()
+  startGame (opponentId, isPlayer2) {
+    let players = [this.state.id]
+    players[isPlayer2 ? 'push' : 'unshift'](opponentId)
+    console.log('this.players:', players)
+    this.game = new Game(this, players)
     this.element.innerHTML = this.game.render()
     this.hideModal()
   }
@@ -75,6 +82,7 @@ class App {
       console.log('this:', this.state)
 
       this.socket.on('private', (invitation) => {
+        if (this.game) return
         console.log('private:', invitation)
         const player = this.playerList.players[invitation.from]
         this.showModal(this.renderInviteModal(player))
@@ -87,18 +95,17 @@ class App {
       })
 
       this.socket.on('newClient', (player) => {
-        console.log('newClient:', player)
-        // this.playerList.options.push(player)
         this.playerList.players = {
           ...this.playerList.players,
           [player.id]: player
         }
+        if (this.game) return
         this.element.innerHTML = this.playerList.render()
       })
 
       this.socket.on('clientLeft', (playerId) => {
-        console.log('client left:', playerId)
         delete this.playerList.players[playerId]
+        if (this.game) return
         this.element.innerHTML = this.playerList.render()
       })
 
@@ -108,13 +115,9 @@ class App {
 
       })
 
-      this.socket.on('tableUpdate', function(msg) {
-        console.log('tableupdated:')
-      })
-
-      this.socket.on('invitationAccepted', (gamePlayers) => {
-        console.log('invitationaccepted:')
-        this.startGame()
+      this.socket.on('invitationAccepted', (opponent) => {
+        console.log('invitationaccepted:', opponent)
+        this.startGame(opponent)
       })
 
     })
@@ -123,7 +126,6 @@ class App {
 }
 
 window.app = {
-  // init: () => app.game = new App(document.getElementById('app'))
   init: () => app = new App(document.getElementById('app'))
 }
 

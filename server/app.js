@@ -37,7 +37,7 @@ function init (client) {
   client.on('accept', function(msg) {
 
     console.log('Accepted from: ', msg);
-    io.sockets.to(msg).emit('invitationAccepted', msg)
+    io.sockets.to(msg.p1).emit('invitationAccepted', msg.p2)
   })
 
   client.on('deny', function(playerId) {
@@ -48,9 +48,9 @@ function init (client) {
     io.sockets.to(invitation.to).emit('private', invitation)
   })
 
-  client.on('table', function(msg) {
-    console.log(msg);
-    io.sockets.to(msg.id).emit('tableUpdate', msg)
+  client.on('table', function(table, id) {
+    // console.log(msg);
+    io.sockets.to(id).emit('tableUpdate', table)
   })
 }
 
