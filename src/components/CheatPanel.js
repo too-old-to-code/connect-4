@@ -5,50 +5,91 @@ class CheatPanel {
     document.onkeyup = this.detectCheatCode.bind(this)
     this.characters = ''
     this.isVisible = false
-    this.custom = {
-      rows: '',
-      cols: '',
-      win: '',
-      p1Color: '',
-      p2Color: ''
+    this.ruleSet = {
+      rows: '7',
+      cols: '6',
+      win: '4',
+      p1Color: '#ffa502',
+      p2Color: '#ff4757'
     }
   }
 
   render () {
     return `
-      <div class="secret-panel">
-        <input
-          type="number"
-          placeholder="Num of rows"
-          value="${this.custom.rows}"
-          oninput="app.playerList.cheatPanel.custom.row = this.value"
-        />
-        <input
-          type="number"
-          placeholder="Num of columns"
-          value="${this.custom.cols}"
-          oninput="app.playerList.cheatPanel.custom.cols = this.value"
-        />
-        <input
-          type="number"
-          placeholder="Num to win"
-          value="${this.custom.win}"
-          oninput="app.playerList.cheatPanel.custom.win = this.value"
-        />
-        <input
-          type="color"
-          placeholder="Player 1"
-          value="${this.custom.p1Color}"
-          oninput="app.playerList.cheatPanel.custom.p1Color = this.value"
-        />
-        <input
-          type="color"
-          placeholder="Player 2"
-          value="${this.custom.p2Color}"
-          oninput="app.playerList.cheatPanel.custom.p2Color = this.value"
-        />
-      </div>
+      <form class="secret-panel" onchange="app.playerList.cheatPanel.handleChange()">
+        <div>
+          <span>Rows:</span>
+            <span class="range-group">
+            <input
+              type="range"
+              max="10"
+              min="4"
+              placeholder="Num of rows"
+              value="${this.ruleSet.rows}"
+              oninput="app.playerList.cheatPanel.ruleSet.rows = this.value"
+            />
+            <span class="rows panel-value">${this.ruleSet.rows}</span>
+          </span>
+        </div>
+        <div>
+          <span>Columns:</span>
+          <span class="range-group">
+            <input
+              type="range"
+              max="10"
+              min="4"
+              placeholder="Num of columns"
+              value="${this.ruleSet.cols}"
+              oninput="app.playerList.cheatPanel.ruleSet.cols = this.value"
+            />
+            <span class="cols panel-value">${this.ruleSet.cols}</span>
+          <span>
+        </div>
+        <div>
+          <span>Win condition:</span>
+          <span class="range-group">
+            <input
+              type="range"
+              placeholder="Num to win"
+              min="3"
+              max="7"
+              value="${this.ruleSet.win}"
+              oninput="app.playerList.cheatPanel.ruleSet.win = this.value"
+            />
+            <span class="win panel-value">${this.ruleSet.win}</span>
+          </span>
+        </div>
+        <div>
+          <span>Your coin color:</span>
+          <input
+            type="color"
+            placeholder="Player 1"
+            value="${this.ruleSet.p1Color}"
+            oninput="app.playerList.cheatPanel.ruleSet.p1Color = this.value"
+          />
+        </div>
+        <div>
+          <span>Opponent coin color:</span>
+          <input
+            type="color"
+            placeholder="Player 2"
+            value="${this.ruleSet.p2Color}"
+            oninput="app.playerList.cheatPanel.ruleSet.p2Color = this.value"
+          />
+        </div>
+      </form>
     `
+  }
+
+  handleChange() {
+    const secretPanel = document.getElementsByClassName('secret-panel')[0]
+    let cols = secretPanel.querySelector('.cols')
+    let rows = secretPanel.querySelector('.rows')
+    let win = secretPanel.querySelector('.win')
+    cols.textContent = this.ruleSet.cols
+    rows.textContent = this.ruleSet.rows
+    win.textContent = this.ruleSet.win
+
   }
 
   detectCheatCode (evt) {

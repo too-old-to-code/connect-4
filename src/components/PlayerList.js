@@ -56,7 +56,8 @@ class PlayerList {
     if(!this.selected) return
     let invitation = {
       to: this.selected,
-      from: this.parent.state.id
+      from: this.parent.state.id,
+      customRuleSet: this.cheatPanel.ruleSet
     }
     let player = this.players[this.selected]
     this.parent.socket.emit('invite', invitation)

@@ -13,6 +13,7 @@ class App {
     this.state = {
       token: ''
     }
+    this.suggestedRuleSet = {}
     // this.characters = ''
     this.element.innerHTML = this.render()
 
@@ -63,21 +64,24 @@ class App {
     })
 
     // this.socket.emit('accept', this.state.id)
-    this.startGame(opponentId, true)
+    this.startGame(opponentId, true, this.suggestedRuleSet)
   }
 
   declineInvitation (opponentId) {
     this.socket.emit('deny', opponentId)
     this.hideModal()
+    this.suggestedRuleSet = {}
   }
 
-  startGame (opponentId, isPlayer2) {
+  startGame (opponentId, isPlayer2, ruleSet) {
+    let rs = ruleSet || this.playerList.cheatPanel.ruleSet
     let players = [this.state.id]
     players[isPlayer2 ? 'push' : 'unshift'](opponentId)
-    this.game = new Game(this, players)
+    this.game = new Game(this, players, rs)
     this.element.innerHTML = this.game.render()
     this.hideModal()
     this.socket.emit('occupied', this.state.id, true)
+    this.suggestedRuleSet = {}
   }
 
   showModal (modal) {
@@ -105,6 +109,7 @@ class App {
         if (this.game) return
         console.log('private:', invitation)
         const player = this.playerList.players[invitation.from]
+        this.suggestedRuleSet = invitation.customRuleSet
         this.showModal(this.renderInviteModal(player))
       })
 

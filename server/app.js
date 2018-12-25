@@ -52,6 +52,7 @@ function init (client) {
   })
 
   client.on('invite', function(invitation) {
+    console.log('invitation:', invitation)
     io.sockets.to(invitation.to).emit('private', invitation)
   })
 

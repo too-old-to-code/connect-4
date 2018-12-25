@@ -1,4 +1,4 @@
-const {
+let {
   NUM_OF_COLUMNS,
   NUM_OF_ROWS,
   NUM_OF_CELLS,
@@ -44,7 +44,7 @@ function gameDrawn (tableState) {
 const determinePlayerTurn = turn => (turn % 2) + 1
 
 class Game {
-  constructor(parent, players){
+  constructor(parent, players, ruleSet){
     this.parent = parent
     this.state = {
       players: players,
@@ -52,11 +52,13 @@ class Game {
       table: (() => {
         let arr = Array.apply(null, new Array(NUM_OF_CELLS))
         return arr.map(el => 0)
-      })()
+      })(),
+      ...ruleSet
     }
     this.localPlayerId = players.filter(id => id === this.parent.state.id)[0]
     this.remotePlayerId = players.filter(id => id !== this.parent.state.id)[0]
-
+    console.log('thisstate:')
+    console.log(this.state)
     // game events
     this.parent.socket.on('tableUpdate', this.handleTableUpdate.bind(this))
   }
