@@ -14,6 +14,10 @@ class CheatPanel {
     document.onkeyup = this.detectCheatCode.bind(this)
     this.characters = ''
     this.isVisible = false
+    this.resetRuleSet()
+  }
+
+  resetRuleSet () {
     this.ruleSet = {
       rows: NUM_OF_ROWS,
       cols: NUM_OF_COLUMNS,

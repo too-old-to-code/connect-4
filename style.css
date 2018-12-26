@@ -45,6 +45,24 @@ html, body {
   background: aliceblue;
   padding: 20px;
   text-align: center;
+  font-size: 1.5em;
+  color: #2f3542;
+}
+
+.modal-box.winner {
+  border: 15px solid #2ed573;
+  background-color: #7bed9f;
+}
+
+.modal-box.loser {
+  border: 15px solid #ff4757;
+  background-color: #ff6b81;
+}
+
+.modal-box.draw {
+  border: 15px solid #ffa502;
+  background-color: #eccc68;
+
 }
 
 .show {
@@ -58,10 +76,11 @@ html, body {
 .login-form, .player-list, .secret-panel {
   padding: 5px 30px;
   width: 260px;
-  border: 1px solid black;
+  /*border: 1px solid black;*/
   background-color: #70a1ff;
   border-radius: 5px;
   margin-top: 10px;
+  border: 12px solid #ffa502;
 }
 
 

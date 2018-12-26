@@ -23,10 +23,10 @@ class Game {
     this.parent.socket.on('tableUpdate', this.handleTableUpdate.bind(this))
   }
 
-  renderGameEndMessage(text) {
+  renderGameEndMessage(msg) {
     return (`
-      <div class="modal-box">
-        <span class="modal-title">${text}</span>
+      <div class="modal-box ${msg[1]}">
+        <span class="modal-title">${msg[0]}</span>
       </div>
     `)
   }
@@ -51,11 +51,11 @@ class Game {
     let [gameWasWon, winner] = gameHasBeenWon(updatedTable, this.state.players)
     if (gameWasWon) {
       let endMessage = winner === this.localPlayerId
-        ? 'You won dude!!!'
-        : 'You got smashed mate!!!'
+        ? ['You won dude!!!', 'winner']
+        : ['You got smashed mate!!!', 'loser']
       this.showEndMessage(endMessage)
     } else if (gameDrawn(updatedTable)) {
-      this.showEndMessage('This game was a draw')
+      this.showEndMessage(['This game was a draw', 'draw'])
     } else if (!turnAlreadyIncremented){
       this.state.turn ++
     }
@@ -71,6 +71,7 @@ class Game {
     this.parent.showModal(this.renderGameEndMessage(msg))
     this.parent.suggestedRuleSet = {}
     this.parent.playerList.cheatPanel.isVisible = false
+    this.parent.playerList.cheatPanel.resetRuleSet()
   }
 
   handleAction (evt) {
