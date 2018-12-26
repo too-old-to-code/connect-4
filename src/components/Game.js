@@ -1,5 +1,6 @@
 const gameLogicHelpers = require('../helpers/game-logic')
 const tableUI = require('./apparatus/Table')
+const { modalMessages: { WIN, LOSE, DRAW}} = require('../constants')
 
 const isLocalPlayersTurn = (playerToMoveID, localPlayerID) => playerToMoveID === localPlayerID
 
@@ -51,11 +52,11 @@ class Game {
     let [gameWasWon, winner] = gameHasBeenWon(updatedTable, this.state.players)
     if (gameWasWon) {
       let endMessage = winner === this.localPlayerId
-        ? ['You won dude!!!', 'winner']
-        : ['You got smashed mate!!!', 'loser']
+        ? [WIN, 'winner']
+        : [LOSE, 'loser']
       this.showEndMessage(endMessage)
     } else if (gameDrawn(updatedTable)) {
-      this.showEndMessage(['This game was a draw', 'draw'])
+      this.showEndMessage([DRAW, 'draw'])
     } else if (!turnAlreadyIncremented){
       this.state.turn ++
     }

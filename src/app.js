@@ -1,10 +1,13 @@
-const io = require('socket.io-client');
+// const io = require('socket.io-client');
 const LoginForm = require('./components/LoginForm')
 const PlayerList = require('./components/PlayerList')
 const Game = require('./components/Game')
+const Socket = require('./components/Socket')
 
-class App {
+// Example of Object oriented programming
+class App extends Socket {
   constructor(element) {
+    super()
     this.element = element
     this.modal = document.querySelector('.modal')
     this.login = new LoginForm(this)
@@ -30,6 +33,7 @@ class App {
   }
 
   render () {
+    // Example of using localStorage and try catch statements
     try {
       let appState = localStorage.getItem('appState')
       if (appState) {
@@ -38,6 +42,7 @@ class App {
     } catch (e) {
       console.log('Couldn\t deserialise appstate')
     }
+    // Example using IIFE
     return !this.state.token
       ? this.login.render()
       : (() => {
@@ -82,62 +87,9 @@ class App {
     this.element.classList.remove('show-modal')
     this.modal.classList.remove('show')
   }
-
-  listenForConnection () {
-    this.socket = io('http://localhost:3000');
-
-    this.socket.on('connect', () => {
-      this.socket.emit('login', this.state.token)
-
-      this.state.id = this.socket.id
-
-      this.socket.on('private', (invitation) => {
-        if (this.game) return
-        const player = this.playerList.players[invitation.from]
-        this.suggestedRuleSet = invitation.customRuleSet
-        this.showModal(this.renderInviteModal(player))
-      })
-
-      this.socket.on('playerBusyStatusChange', clients => {
-        this.playerList.players = clients
-        if (this.game) return
-        this.element.innerHTML = this.playerList.render()
-      })
-
-      this.socket.on('newConnection', (players) => {
-        this.playerList.players = players
-        if (this.game) return
-        this.element.innerHTML = this.playerList.render()
-      })
-
-      this.socket.on('newClient', (player) => {
-        this.playerList.players = {
-          ...this.playerList.players,
-          [player.id]: player
-        }
-        if (this.game) return
-        this.element.innerHTML = this.playerList.render()
-      })
-
-      this.socket.on('clientLeft', (playerId) => {
-        delete this.playerList.players[playerId]
-        if (this.game) return
-        this.element.innerHTML = this.playerList.render()
-      })
-
-      this.socket.on('invitationDenied', (opponentId) => {
-        this.hideModal()
-      })
-
-      this.socket.on('invitationAccepted', (opponent) => {
-        this.startGame(opponent)
-      })
-
-    })
-  }
-
 }
 
+// Example of self defining function
 window.app = {
   init: () => app = new App(document.getElementById('app'))
 }

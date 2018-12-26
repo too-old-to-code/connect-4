@@ -105,6 +105,7 @@ class CheatPanel {
   }
 
   detectCheatCode (evt) {
+    if (this.root.game) return
     this.characters = this.characters.length >= 8 ?
       `${this.characters.substring(1,8)}${evt.key}` :
       `${this.characters}${evt.key}`

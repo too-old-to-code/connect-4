@@ -1,3 +1,4 @@
+// Example of understanding of closures and the module pattern
 module.exports = ruleSet => {
 
   const { win: NUM_TO_WIN, rows: NUM_OF_ROWS, cols: NUM_OF_COLUMNS } = ruleSet
@@ -25,12 +26,14 @@ module.exports = ruleSet => {
   const p1WinCondition = new RegExp(detectAWin('1'), 'g')
   const p2WinCondition = new RegExp(detectAWin('2'), 'g')
 
+  // Example of regular expressions
   const gameHasBeenWon = (tableState, players) => {
     const re = new RegExp(`.{${NUM_OF_COLUMNS}}`,'g')
     const stringifiedTable = tableState.join('').match(re).join('|');
     const p1Winner = p1WinCondition.test(stringifiedTable)
     const p2Winner = p2WinCondition.test(stringifiedTable)
     const hasWinner = p1Winner || p2Winner
+    // Example of familiarity with tuples
     return [hasWinner, hasWinner && (p1Winner ? players[0] : players[1])]
   }
 
@@ -48,7 +51,7 @@ module.exports = ruleSet => {
     }
     return currentCell >= 0 ? currentCell : null
   }
-
+  // Example of functional style with function composition
   const findEmptyCellInColumn = (id, tableState) =>
     findUppermostEmptyCellInColumn(findBottomCellOfColumn(findParentColumnOfCell(id)), tableState)
 
