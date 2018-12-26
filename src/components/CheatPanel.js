@@ -1,3 +1,12 @@
+const {
+  NUM_OF_ROWS,
+  NUM_OF_COLUMNS,
+  NUM_TO_WIN,
+  P1_COLOR,
+  P2_COLOR,
+  CHEAT_CODE
+} = require('../constants')
+
 class CheatPanel {
   constructor (parent) {
     this.parent = parent
@@ -6,11 +15,11 @@ class CheatPanel {
     this.characters = ''
     this.isVisible = false
     this.ruleSet = {
-      rows: '7',
-      cols: '6',
-      win: '4',
-      p1Color: '#ffa502',
-      p2Color: '#ff4757'
+      rows: NUM_OF_ROWS,
+      cols: NUM_OF_COLUMNS,
+      win: NUM_TO_WIN,
+      p1Color: P1_COLOR,
+      p2Color: P2_COLOR
     }
   }
 
@@ -89,18 +98,16 @@ class CheatPanel {
     cols.textContent = this.ruleSet.cols
     rows.textContent = this.ruleSet.rows
     win.textContent = this.ruleSet.win
-
   }
 
   detectCheatCode (evt) {
     this.characters = this.characters.length >= 8 ?
       `${this.characters.substring(1,8)}${evt.key}` :
       `${this.characters}${evt.key}`
-    if (this.characters.includes('custom')){
+    if (this.characters.includes(CHEAT_CODE)){
       this.characters = ''
       this.isVisible = true
       this.root.element.innerHTML = this.parent.render()
-      console.log('cheat activated:')
     }
   }
 }

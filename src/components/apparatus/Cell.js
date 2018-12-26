@@ -1,10 +1,11 @@
 const initialOffset = 20
+const App = require('../../app')
 const leftOffset = (id, cols) => (id % cols) * 10 + initialOffset
 const topOffset = (id, cols) => Math.floor(id/cols) * 10 + initialOffset
 
-module.exports = (id, cols, state) => {
-  console.log('state:', state)
-  let color = state ? `background-color: ${state === 1 ? 'red' : 'yellow'};` : ''
+module.exports = (id, cols, hasCoin) => {
+  let { p1Color, p2Color } = app.game.state
+  let color = hasCoin ? `background-color: ${hasCoin === 1 ? p1Color : p2Color};` : ''
   return `
   <td
     data-id="${id}"

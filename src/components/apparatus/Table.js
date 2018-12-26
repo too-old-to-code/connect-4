@@ -1,9 +1,9 @@
 const row = require('./Row')
 
-const table = (rows, cols, state) => {
+const Table = ({rows, cols, table}) => {
   let html = ''
   for (let i = 0; i < rows; i++) {
-    html += row(i * cols, cols, state.slice(i * cols, i * cols + cols))
+    html += row(i * cols, cols, table.slice(i * cols, (i * +cols) + +cols))
   }
   return `
     <table
@@ -14,4 +14,4 @@ const table = (rows, cols, state) => {
     </table>`
 }
 
-module.exports = table
+module.exports = Table

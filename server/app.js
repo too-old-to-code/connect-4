@@ -9,7 +9,6 @@ function init (client) {
 
   client.on('login', function(username) {
     // push the client id into the clients array
-    // clients.push({name: username, id: client.id})
     clients = {
       ...clients,
       [client.id]: { name: username, id: client.id, busy: false }
@@ -19,14 +18,10 @@ function init (client) {
     io.sockets.emit('newClient', {name: username, id: client.id})
 
     // if client joins send him the current list of players
-    // client.emit('newConnection', clients.filter(c => c.id !== client.id))
-
     client.emit('newConnection', clients)
-    // console.log(':', clients.filter(c => c.id !== client.id) )
   })
 
   client.on('event', function(data){
-    console.log('Event: ', data);
   });
 
   client.on('disconnect', function(){
@@ -35,15 +30,11 @@ function init (client) {
   });
 
   client.on('occupied', function(id, busy) {
-    console.log('occupied:', id)
     clients[id].busy = busy
     io.sockets.emit('playerBusyStatusChange', clients)
-    console.log('clients:', clients)
   })
 
   client.on('accept', function(msg) {
-
-    console.log('Accepted from: ', msg);
     io.sockets.to(msg.p1).emit('invitationAccepted', msg.p2)
   })
 
@@ -52,12 +43,10 @@ function init (client) {
   })
 
   client.on('invite', function(invitation) {
-    console.log('invitation:', invitation)
     io.sockets.to(invitation.to).emit('private', invitation)
   })
 
   client.on('table', function(table, id) {
-    // console.log(msg);
     io.sockets.to(id).emit('tableUpdate', table)
   })
 }

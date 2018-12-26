@@ -14,7 +14,6 @@ class App {
       token: ''
     }
     this.suggestedRuleSet = {}
-    // this.characters = ''
     this.element.innerHTML = this.render()
 
   }
@@ -47,23 +46,12 @@ class App {
         })()
   }
 
-  // detectCheatCode (evt) {
-  //   this.characters = this.characters.length >= 8 ?
-  //     `${this.characters.substring(1,8)}${evt.key}` :
-  //     `${this.characters}${evt.key}`
-  //   if (this.characters.includes('custom')){
-  //     this.characters = ''
-  //     console.log('cheat activated:')
-  //   }
-  // }
-
   acceptInvitation (opponentId) {
     this.socket.emit('accept', {
       p1: opponentId,
       p2: this.state.id
     })
 
-    // this.socket.emit('accept', this.state.id)
     this.startGame(opponentId, true, this.suggestedRuleSet)
   }
 
@@ -99,31 +87,24 @@ class App {
     this.socket = io('http://localhost:3000');
 
     this.socket.on('connect', () => {
-      console.log('connected:')
       this.socket.emit('login', this.state.token)
 
       this.state.id = this.socket.id
-      console.log('this:', this.state)
 
       this.socket.on('private', (invitation) => {
         if (this.game) return
-        console.log('private:', invitation)
         const player = this.playerList.players[invitation.from]
         this.suggestedRuleSet = invitation.customRuleSet
         this.showModal(this.renderInviteModal(player))
       })
 
       this.socket.on('playerBusyStatusChange', clients => {
-        console.log('players:', clients)
-
         this.playerList.players = clients
         if (this.game) return
         this.element.innerHTML = this.playerList.render()
-
       })
 
       this.socket.on('newConnection', (players) => {
-        console.log('newjoiner:', players)
         this.playerList.players = players
         if (this.game) return
         this.element.innerHTML = this.playerList.render()
@@ -145,13 +126,10 @@ class App {
       })
 
       this.socket.on('invitationDenied', (opponentId) => {
-        console.log('invitation denied:')
         this.hideModal()
-
       })
 
       this.socket.on('invitationAccepted', (opponent) => {
-        console.log('invitationaccepted:', opponent)
         this.startGame(opponent)
       })
 

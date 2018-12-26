@@ -1,47 +1,7 @@
-let {
-  NUM_OF_COLUMNS,
-  NUM_OF_ROWS,
-  NUM_OF_CELLS,
-  p1WinCondition,
-  p2WinCondition
-} = require('../constants')
-
+const gameLogicHelpers = require('../helpers/game-logic')
 const tableUI = require('./apparatus/Table')
 
-let isLocalPlayersTurn = (playerToMoveID, localPlayerID) => playerToMoveID === localPlayerID
-
-const findParentColumnOfCell = id => id % NUM_OF_COLUMNS
-
-const findBottomCellOfColumn = columnId =>
-  NUM_OF_ROWS * NUM_OF_COLUMNS - (NUM_OF_COLUMNS - columnId)
-
-const coinInCellAlready = (tableState, cell) => Boolean(tableState[cell])
-
-const findUppermostEmptyCellInColumn = (bottomCellOfColumn, tableState) => {
-  let currentCell = bottomCellOfColumn
-  while (coinInCellAlready(tableState, currentCell)) {
-    currentCell -= NUM_OF_COLUMNS
-  }
-  return currentCell >= 0 ? currentCell : null
-}
-
-const findEmptyCellInColumn = (id, tableState) =>
-  findUppermostEmptyCellInColumn(findBottomCellOfColumn(findParentColumnOfCell(id)), tableState)
-
-function gameHasBeenWon (tableState, players) {
-  const re = new RegExp(`.{${NUM_OF_COLUMNS}}`,'g')
-  const stringifiedTable = tableState.join('').match(re).join('|');
-  const p1Winner = p1WinCondition.test(stringifiedTable)
-  const p2Winner = p2WinCondition.test(stringifiedTable)
-  const hasWinner = p1Winner || p2Winner
-  return [hasWinner, hasWinner && (p1Winner ? players[0] : players[1])]
-}
-
-function gameDrawn (tableState) {
-  return !tableState.includes(0)
-}
-
-const determinePlayerTurn = turn => (turn % 2) + 1
+const isLocalPlayersTurn = (playerToMoveID, localPlayerID) => playerToMoveID === localPlayerID
 
 class Game {
   constructor(parent, players, ruleSet){
@@ -50,15 +10,15 @@ class Game {
       players: players,
       turn: 0,
       table: (() => {
-        let arr = Array.apply(null, new Array(NUM_OF_CELLS))
+        let arr = Array.apply(null, new Array((ruleSet.rows * ruleSet.cols)))
         return arr.map(el => 0)
       })(),
-      ...ruleSet
+      ...ruleSet,
     }
     this.localPlayerId = players.filter(id => id === this.parent.state.id)[0]
     this.remotePlayerId = players.filter(id => id !== this.parent.state.id)[0]
-    console.log('thisstate:')
-    console.log(this.state)
+
+    this.helpers = gameLogicHelpers(this.state)
     // game events
     this.parent.socket.on('tableUpdate', this.handleTableUpdate.bind(this))
   }
@@ -75,15 +35,16 @@ class Game {
     return (`
       <div
         class="game"
-        style="min-width: ${7 * 90}px"
+        style="min-width: ${this.state.cols * 90}px"
         onclick="app.game.handleAction(event)"
       >
-        ${tableUI(6, 7, this.state.table)}
+        ${tableUI(this.state)}
       </div>
     `)
   }
 
   handleTableUpdate(updatedTable, turnAlreadyIncremented) {
+    const { gameHasBeenWon, gameDrawn } = this.helpers
     this.state.table = updatedTable
     this.parent.element.innerHTML = this.render()
 
@@ -108,6 +69,8 @@ class Game {
       this.parent.socket.emit('occupied', this.localPlayerId, false)
     }, 3000)
     this.parent.showModal(this.renderGameEndMessage(msg))
+    this.parent.suggestedRuleSet = {}
+    this.parent.playerList.cheatPanel.isVisible = false
   }
 
   handleAction (evt) {
@@ -115,7 +78,7 @@ class Game {
     const { id: cellId } = evt.target.dataset
     if(!isLocalPlayersTurn(players[turn % 2], this.localPlayerId) || (cellId == null)) return
     this.state.turn ++
-    let emptyCellInColumn = findEmptyCellInColumn(cellId, this.state.table)
+    let emptyCellInColumn = this.helpers.findEmptyCellInColumn(cellId, this.state.table)
     if (emptyCellInColumn != null) {
       this.state.table[emptyCellInColumn] = (turn % 2) + 1
       this.parent.socket.emit('table', this.state.table, this.remotePlayerId)
