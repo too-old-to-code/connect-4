@@ -3,10 +3,13 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
   background-color: black;
   font-family: sans-serif;
   font-size: 15px;
+}
+
+body * {
+  box-sizing: border-box;
 }
 
 #app {
@@ -138,12 +141,16 @@ html, body {
   text-align: center;
   width: 100%;
   position: absolute;
-  top: 50px;
+  top: 70px;
   box-sizing: border-box;
 }
 
 table {
   position: relative;
+}
+
+table * {
+  box-sizing: content-box;
 }
 
 td {
@@ -197,6 +204,7 @@ td:last-child:after {
 }
 
 .secret-panel {
+  box-sizing: content-box;
   display: flex;
   flex-direction: column;
   border: 12px solid #ffa502;
@@ -225,6 +233,38 @@ td:last-child:after {
 .range-group > span {
   position: relative;
   top: -6px;
+}
+
+.players {
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 30px;
+}
+
+.players__name {
+  opacity: 1;
+  border: 1px solid black;
+  border-radius: 3px;
+  padding: 8px;
+  margin: 5px;
+  text-align: center;
+  color: white;
+  background-color: black;
+  font-size: 1.5em;
+}
+
+.players__name--active {
+  opacity: .3;
+}
+
+.players__text {
+  display: inline-block;
+  border-radius: 3px;
+  width: 100%;
+  border-width: 3px;
+  border-style: solid;
+  padding: 5px 20px;
 }
 
 
