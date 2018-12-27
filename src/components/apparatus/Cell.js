@@ -8,6 +8,7 @@ module.exports = (id, cols, hasCoin) => {
   let color = hasCoin ? `background-color: ${hasCoin === 1 ? p1Color : p2Color};` : ''
   return `
   <td
+    class="apparatus__cell"
     data-id="${id}"
     style="left: -${leftOffset(id, cols)}px; top: -${topOffset(id, cols)}px; ${color}}"
   />

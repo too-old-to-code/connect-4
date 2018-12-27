@@ -7,7 +7,7 @@ const row = (startIndex, cols, row) => {
     html += cell(i, cols, row.slice(i % cols, i % cols + 1)[0])
   }
   return `
-    <tr>${html}</tr>
+    <tr class="apparatus__row">${html}</tr>
   `
 }
 

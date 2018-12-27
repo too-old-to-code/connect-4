@@ -7,14 +7,14 @@ class LoginForm {
 
   render () {
     return `
-      <div class="login-form">
+      <div class="panel">
         <input
           placeholder="Name"
-          class="name"
+          class="input"
           value="${this.value}"
           oninput="app.login.handleInput(this.value)"
         />
-        <button onclick="app.login.handleConnect()">Join</button>
+        <button class="btn" onclick="app.login.handleConnect()">Join</button>
       </div>
     `
   }

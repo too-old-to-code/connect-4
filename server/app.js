@@ -30,7 +30,9 @@ function init (client) {
   });
 
   client.on('occupied', function(id, busy) {
-    clients[id].busy = busy
+    if(clients[id]){
+      clients[id].busy = busy
+    }
     io.sockets.emit('playerBusyStatusChange', clients)
   })
 

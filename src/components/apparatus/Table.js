@@ -7,7 +7,7 @@ const Table = ({rows, cols, table}) => {
   }
   return `
     <table
-      id="table"
+      class="apparatus"
       style="left: ${cols * 10}px; top: ${rows * 10}px"
     />
       ${html}

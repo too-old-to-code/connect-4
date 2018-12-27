@@ -23,11 +23,11 @@ class App extends Socket {
 
   renderInviteModal (player) {
     return `
-      <div class="modal-box">
-        <span class="modal-title">${player.name} has invited you to play a game</span>
+      <div class="modal__box">
+        <span class="modal__title">${player.name} has invited you to play a game</span>
         <hr/>
-        <button onclick="app.acceptInvitation('${player.id}')">Accept</button>
-        <button onclick="app.declineInvitation('${player.id}')">Decline</button>
+        <button class="btn" onclick="app.acceptInvitation('${player.id}')">Accept</button>
+        <button class="btn" onclick="app.declineInvitation('${player.id}')">Decline</button>
       </div>
     `
   }
@@ -78,14 +78,14 @@ class App extends Socket {
   }
 
   showModal (modal) {
-    this.element.classList.add('show-modal')
-    this.modal.classList.add('show')
+    this.element.classList.add('main--modal')
+    this.modal.classList.add('modal--show')
     this.modal.innerHTML = modal
   }
 
   hideModal () {
-    this.element.classList.remove('show-modal')
-    this.modal.classList.remove('show')
+    this.element.classList.remove('main--modal')
+    this.modal.classList.remove('modal--show')
   }
 }
 

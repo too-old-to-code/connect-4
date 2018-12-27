@@ -30,8 +30,8 @@ class Game {
 
   renderGameEndMessage(msg) {
     return (`
-      <div class="modal-box ${msg[1]}">
-        <span class="modal-title">${msg[0]}</span>
+      <div class="modal__box modal__box--${msg[1]}">
+        <span class="modal__title">${msg[0]}</span>
       </div>
     `)
   }

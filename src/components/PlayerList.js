@@ -10,19 +10,18 @@ class PlayerList {
 
   renderInviteModal (player) {
     return `
-      <div class="modal-box">
-        <span class="modal-title">Waiting for ${player.name} to accept your invitation</span class="modal-title">
+      <div class="modal__box">
+        <span class="modal__title">Waiting for ${player.name} to accept your invitation</span>
         <hr />
-        <button onclick="app.declineInvitation('${player.id}')">Cancel</button>
+        <button class="btn" onclick="app.declineInvitation('${player.id}')">Cancel</button>
       </div>
     `
   }
 
   render () {
     return `
-      <div class="player-list-wrapper">
-        <div class="player-list">
-          <select size="5" ${this.options().length ? '' : 'class="empty-list"'} >
+      <div class="panel">
+          <select size="5" class="${this.options().length ? 'list' : 'list list--empty'}" >
             ${
                 this.options().reduce((acc, option) => {
                   return `${acc}<option
@@ -35,12 +34,11 @@ class PlayerList {
                 }, '')
             }
           </select>
-          <button onclick="app.playerList.handleInvite()" ${this.options().length ? '' : 'disabled'}>Invite</button>
-        </div>
+          <button class="btn btn--fullwidth" onclick="app.playerList.handleInvite()" ${this.options().length ? '' : 'disabled'}>Invite</button>
         ${
             this.options().length
               ? ''
-              : '<span class="warning">Currently, no other players are online</span>'
+              : '<span class="list__warning">Currently, no other players are online</span>'
           }
       </div>
       ${this.cheatPanel.isVisible ? this.cheatPanel.render() : '' }

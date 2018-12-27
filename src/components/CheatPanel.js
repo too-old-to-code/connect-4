@@ -29,10 +29,10 @@ class CheatPanel {
 
   render () {
     return `
-      <form class="secret-panel" onchange="app.playerList.cheatPanel.handleChange()">
-        <div>
+      <form class="panel panel--secret" onchange="app.playerList.cheatPanel.handleChange()">
+        <div class="panel__field--secret">
           <span>Rows:</span>
-            <span class="range-group">
+            <span class="panel__slider">
             <input
               type="range"
               max="10"
@@ -41,12 +41,12 @@ class CheatPanel {
               value="${this.ruleSet.rows}"
               oninput="app.playerList.cheatPanel.ruleSet.rows = this.value"
             />
-            <span class="rows panel-value">${this.ruleSet.rows}</span>
+            <span class="rows panel__value">${this.ruleSet.rows}</span>
           </span>
         </div>
-        <div>
+        <div class="panel__field--secret">
           <span>Columns:</span>
-          <span class="range-group">
+          <span class="panel__slider">
             <input
               type="range"
               max="10"
@@ -55,12 +55,12 @@ class CheatPanel {
               value="${this.ruleSet.cols}"
               oninput="app.playerList.cheatPanel.ruleSet.cols = this.value"
             />
-            <span class="cols panel-value">${this.ruleSet.cols}</span>
+            <span class="cols panel__value">${this.ruleSet.cols}</span>
           <span>
         </div>
-        <div>
+        <div class="panel__field--secret">
           <span>Win condition:</span>
-          <span class="range-group">
+          <span class="panel__slider">
             <input
               type="range"
               placeholder="Num to win"
@@ -69,33 +69,37 @@ class CheatPanel {
               value="${this.ruleSet.win}"
               oninput="app.playerList.cheatPanel.ruleSet.win = this.value"
             />
-            <span class="win panel-value">${this.ruleSet.win}</span>
+            <span class="win panel__value">${this.ruleSet.win}</span>
           </span>
         </div>
-        <div>
+        <div class="panel__field--secret">
           <span>Your coin color:</span>
-          <input
-            type="color"
-            placeholder="Player 1"
-            value="${this.ruleSet.p1Color}"
-            oninput="app.playerList.cheatPanel.ruleSet.p1Color = this.value"
-          />
+          <span class="panel__color">
+            <input
+              type="color"
+              placeholder="Player 1"
+              value="${this.ruleSet.p1Color}"
+              oninput="app.playerList.cheatPanel.ruleSet.p1Color = this.value"
+            />
+          </span>
         </div>
-        <div>
+        <div class="panel__field--secret">
           <span>Opponent coin color:</span>
-          <input
-            type="color"
-            placeholder="Player 2"
-            value="${this.ruleSet.p2Color}"
-            oninput="app.playerList.cheatPanel.ruleSet.p2Color = this.value"
-          />
+          <span class="panel__color">
+            <input
+              type="color"
+              placeholder="Player 2"
+              value="${this.ruleSet.p2Color}"
+              oninput="app.playerList.cheatPanel.ruleSet.p2Color = this.value"
+            />
+          </span>
         </div>
       </form>
     `
   }
 
   handleChange() {
-    const secretPanel = document.getElementsByClassName('secret-panel')[0]
+    const secretPanel = document.getElementsByClassName('panel--secret')[0]
     let cols = secretPanel.querySelector('.cols')
     let rows = secretPanel.querySelector('.rows')
     let win = secretPanel.querySelector('.win')
