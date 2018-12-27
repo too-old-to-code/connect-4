@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "browserify src/app.js -o bundle.js"
+    "build": "browserify src/app.js -o bundle.js",
+    "dev": "npm run build && open index.html && nodemon server/app.js"
   },
   "author": "",
   "license": "ISC",
