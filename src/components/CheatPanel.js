@@ -73,7 +73,7 @@ class CheatPanel {
           </span>
         </div>
         <div class="panel__field--secret">
-          <span>Your coin color:</span>
+          <span>Opponent coin color:</span>
           <span class="panel__color">
             <input
               type="color"
@@ -84,7 +84,7 @@ class CheatPanel {
           </span>
         </div>
         <div class="panel__field--secret">
-          <span>Opponent coin color:</span>
+          <span>Your coin color:</span>
           <span class="panel__color">
             <input
               type="color"

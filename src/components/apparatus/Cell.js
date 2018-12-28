@@ -10,6 +10,6 @@ module.exports = (id, cols, hasCoin) => {
   <td
     class="apparatus__cell"
     data-id="${id}"
-    style="left: -${leftOffset(id, cols)}px; top: -${topOffset(id, cols)}px; ${color}}"
+    style="left: -${leftOffset(id, cols)}px; top: -${topOffset(id, cols)}px; ${color}"
   />
 `}

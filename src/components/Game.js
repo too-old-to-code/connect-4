@@ -54,7 +54,6 @@ class Game {
         onclick="app.game.handleAction(event)"
       >
          ${tableUI(this.state)}
-      }
       </div>
       ${this.playerNamePanel.render(this.state.turn)}
     `)
