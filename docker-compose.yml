@@ -1,0 +1,11 @@
+version: '3.4'
+
+services:
+  server:
+    image: andrewt51/connect-4-server
+    ports:
+      - 3000:3000
+  client:
+    image: andrewt51/connect-4-client
+    ports:
+      - 80:80

@@ -1,4 +1,4 @@
-// Example of understanding of closures and the module pattern
+// Example of understanding of closures and the revealing module pattern
 module.exports = ruleSet => {
 
   const { win: NUM_TO_WIN, rows: NUM_OF_ROWS, cols: NUM_OF_COLUMNS } = ruleSet

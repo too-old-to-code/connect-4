@@ -1,0 +1,273 @@
+:root {
+  --apparatus-color: #05057b;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  font-size: 15px;
+  background-color: black;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  background-color: #f1f2f6;
+  flex-direction: column;
+}
+
+.main {
+  opacity:1;
+  transition: opacity .7s;
+}
+
+.main--modal {
+  opacity: .4 !important;
+}
+
+.modal {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 50px;
+  height: 100%;
+  top: 100%;
+  transition: top .7s;
+}
+
+.modal__box {
+  background: aliceblue;
+  padding: 20px;
+  text-align: center;
+  color: #2f3542;
+  border-style: solid;
+  border-width: 15px;
+  border-color: #ced6e0;
+}
+
+.modal__title {
+  font-size: 1.4em;
+}
+
+.modal__box--winner {
+  border-color: #2ed573;
+  background-color: #7bed9f;
+}
+
+.modal__box--loser {
+  border-color: #ff4757;
+  background-color: #ff6b81;
+}
+
+.modal__box--draw {
+  border-color: #ffa502;
+  background-color: #eccc68;
+}
+
+.modal--show {
+  top: 0;
+}
+
+.panel {
+  text-align: center;
+  position: relative;
+  padding: 15px 30px;
+  width: 300px;
+  background-color: #70a1ff;
+  border-radius: 5px;
+  margin-top: 10px;
+  border: 12px solid #ffa502;
+}
+
+.panel--login {
+  display: flex;
+}
+
+.panel--secret {
+  box-sizing: content-box;
+  display: flex;
+  flex-direction: column;
+  padding-top: 30px;
+}
+
+.panel__field--secret {
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.panel__slider, .panel__color {
+  position: relative;
+  top: -2px;
+}
+
+.panel__value {
+  position: relative;
+  top: -2px;
+  border: 1px solid black;
+  border-radius: 3px;
+  padding: 3px;
+  background-color: #2f3542;
+  color: white;
+}
+
+.btn {
+  font-size: 1.2em;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  border: black solid 1px;
+  background-color: #5352ed;
+  color: white;
+}
+
+.input {
+  font-size: 1.2em;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 3px;
+  border: black solid 1px;
+}
+
+.btn--fullwidth {
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.list {
+  font-size: 1em;
+  width: 100%;
+  margin-top: 5px;
+  border: 1px solid black;
+  padding: 3px;
+}
+
+.list__warning {
+  display: inline-block;
+  padding: 4px;
+  color: #2f3542;
+  text-align: center;
+  width: 100%;
+  position: absolute;
+  top: 35%;
+  left: 0;
+  box-sizing: border-box;
+}
+
+.list--empty {
+  background-color: #a4b0be;
+}
+
+.apparatus {
+  position: relative;
+}
+
+.apparatus__cell {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border: 19px solid  var(--apparatus-color);
+  border-radius: 50%;
+}
+
+.apparatus__cell:after {
+  content: '';
+  position: absolute;
+  border: solid  var(--apparatus-color) 15px;
+  width: 52px;
+  height: 52px;
+  top: -15px;
+  left: -15px;
+}
+
+.apparatus__row:first-child > .apparatus__cell:after {
+  border-top: solid  var(--apparatus-color) 30px;
+  top: -30px;
+}
+
+.apparatus__row:last-child > .apparatus__cell:after {
+  border-bottom: solid  var(--apparatus-color) 30px;
+}
+
+.apparatus__cell:first-child:after {
+  left: -30px;
+  border-left: solid  var(--apparatus-color) 30px;
+}
+
+.apparatus__cell:last-child:after {
+  right: -30px;
+  border-right: solid  var(--apparatus-color) 30px;
+}
+
+.game {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  overflow: hidden;
+  z-index: 30;
+  /*background-image: url(https://media.wired.com/photos/5a6115c648e74b5b5b96a50c/master/w_1800,c_limit/01_HOME_2014%20European%20Clubs%20Cup,%20Bilbao%20-%20Alexander%20Grischuk.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top right;*/
+}
+
+.game::after {
+  content: "";
+  background-image: url(https://media.wired.com/photos/5a6115c648e74b5b5b96a50c/master/w_1800,c_limit/01_HOME_2014%20European%20Clubs%20Cup,%20Bilbao%20-%20Alexander%20Grischuk.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top right;
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+.players {
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 30px;
+}
+
+.players__name {
+  opacity: 1;
+  border: 1px solid black;
+  border-radius: 3px;
+  padding: 8px;
+  margin: 5px;
+  text-align: center;
+  color: white;
+  background-color: black;
+  font-size: 1.5em;
+}
+
+.players__name--active {
+  opacity: .3;
+}
+
+.players__text {
+  display: inline-block;
+  border-radius: 3px;
+  width: 100%;
+  border-width: 3px;
+  border-style: solid;
+  padding: 5px 20px;
+  box-sizing: border-box;
+}
+
+

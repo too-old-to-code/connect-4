@@ -4,9 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "browserify src/app.js -o bundle.js",
-    "dev": "npm run build && open index.html && nodemon server/app.js"
+    "build": "browserify src/app.js -o dist/bundle.js && cp index.html dist/index.html && cp style.css dist/style.css",
+    "dev": "npm run build && open index.html && nodemon ../server/app.js"
   },
   "author": "",
   "license": "ISC",
@@ -14,7 +13,6 @@
     "browserify": "^16.2.3"
   },
   "dependencies": {
-    "socket.io": "^2.2.0",
     "socket.io-client": "^2.2.0"
   }
 }
