@@ -2,10 +2,10 @@ version: '3.4'
 
 services:
   server:
-    image: andrewt51/connect-4-server
+    image: andrewt51/connect-4-server:dynamic
     ports:
       - 3000:3000
   client:
-    image: andrewt51/connect-4-client
+    image: andrewt51/connect-4-client:latest
     ports:
       - 80:80

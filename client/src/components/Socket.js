@@ -2,9 +2,8 @@ const io = require('socket.io-client');
 
 class Socket {
   listenForConnection () {
-    this.socket = io('http://localhost:3000');
-    // this.socket = io('/socket');
 
+    this.socket = io(`${window.location.protocol}//${window.location.hostname}:3000`)
     this.socket.on('connect', () => {
       this.socket.emit('login', this.state.token)
 
